@@ -43,7 +43,7 @@ private:
 		return left;
 	}
 	void b_ins(node_T**);
-	bool b_rem1(node_T**);
+	bool b_rem(node_T**);
 	bool b_rem2(node_T**);
 	bool Insert(T&, node_T**);
 	bool GetMin(node_T**, node_T**);
