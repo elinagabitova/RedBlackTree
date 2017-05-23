@@ -1,4 +1,4 @@
-##include <rb-tree.hpp>
+#include <rb-tree.hpp>
 #include <catch.hpp>
 
 SCENARIO("NULL")
