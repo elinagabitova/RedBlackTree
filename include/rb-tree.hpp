@@ -3,7 +3,8 @@
 using namespace std;
 
 template <class T>
-class RBtree {
+class RBtree 
+{
 	struct node_T
 	{
 		node_T *left, *right;
@@ -149,7 +150,8 @@ void RBtree<T>::b_ins(node_T **root)
 		if (lx1 && lx1->Red) {
 			node->Red = true;
 			left->Red = false;
-			if (right && right->Red) {
+			if (right && right->Red) 
+			{
 				lx1->Red = true;
 				right->Red = false;
 				return;
@@ -159,14 +161,16 @@ void RBtree<T>::b_ins(node_T **root)
 		}
 	}
 
-	if (right && right->Red) {
+	if (right && right->Red) 
+	{
 		lx1 = right->left;
 		if (lx1 && lx1->Red) right = node->right = Rotate12(right);
 		rx1 = right->right;
 		if (rx1 &&rx1->Red) {
 			node->Red = true;
 			right->Red = false;
-			if (left && left->Red) {
+			if (left && left->Red) 
+			{
 				rx1->Red = true;
 				left->Red = false;
 				return;
@@ -230,7 +234,8 @@ bool RBtree<T>::b_rem2(node_T **root)
 		right->Red = false;
 		return false;
 	}
-	if (left && left->Red) {
+	if (left && left->Red)
+	{
 		node->Red = true;
 		left->Red = false;
 		node = *root = Rotate12(node);
@@ -242,7 +247,9 @@ bool RBtree<T>::b_rem2(node_T **root)
 	node_T *pa2 = left->right;
 	if (pa1 && pa1->Red) mask |= 1;
 	if (pa2 && pa2->Red) mask |= 2;
-	switch (mask) {
+	
+	switch (mask)
+	{
 	case 0:
 		left->Red = true;
 		return true;
@@ -259,12 +266,14 @@ bool RBtree<T>::b_rem2(node_T **root)
 	}
 	return false;
 }
+
 template <class T>
 bool RBtree<T>::Insert(T &value, node_T **root)
 {
 	node_T *node = *root;
 	if (!node) *root = NewNode(value);
-	else {
+	else 
+	{
 		if (value == node->value) return true;
 		if (Insert(value, value<node->value ? &node->left : &node->right)) return true;
 		b_ins(root);
@@ -278,7 +287,8 @@ bool RBtree<T>::GetMin(node_T **root, node_T **res)
 	if (node->left) {
 		if (GetMin(&node->left, res)) return b_rem1(root);
 	}
-	else {
+	else
+	{
 		*root = node->right;
 		*res = node;
 		return !node->Red;
@@ -290,20 +300,25 @@ bool RBtree<T>::Remove(node_T **root, T &value)
 {
 	node_T *t, *node = *root;
 	if (!node) return false;
-	if (node->value<value) {
+	if (node->value<value)
+	{
 		if (Remove(&node->right, value))
 			return b_rem2(root);
 	}
-	else if (node->value>value) {
+	else if (node->value>value)
+	{
 		if (Remove(&node->left, value))	return b_rem1(root);
 	}
-	else {
+	else 
+	{
 		bool res;
-		if (!node->right) {
+		if (!node->right) 
+		{
 			*root = node->left;
 			res = !node->Red;
 		}
-		else {
+		else 
+		{
 			res = GetMin(&node->right, root);
 			t = *root;
 			t->Red = node->Red;
